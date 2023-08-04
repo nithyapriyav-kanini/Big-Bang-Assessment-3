@@ -124,6 +124,7 @@ namespace HotelManagement.Repositories
                     if (result != null)
                     {
                         _context.Entry(result).CurrentValues.SetValues(item);
+                        await _context.SaveChangesAsync();
                         return result;
                     }
                     else

@@ -18,12 +18,11 @@ namespace HotelManagement.Services
             _irepo = irepo;
             _arepo = arepo;
         }
-        public async Task<Hotel?> Add(HotelDTO item)
+        public async Task<Hotel?> Add(Hotel item)
         {
-            var hotel = Mapper(item);
-            if(hotel != null)
+            if(item != null)
             {
-                var addHotel = await _hrepo.Add(hotel);
+                var addHotel = await _hrepo.Add(item);
                 if (addHotel != null)
                     return addHotel;
             }

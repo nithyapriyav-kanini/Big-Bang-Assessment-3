@@ -23,7 +23,7 @@ namespace HotelManagement.Controllers
         [HttpPost("AddHotel")]
         [ProducesResponseType(typeof(Hotel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<Hotel>> Add(HotelDTO hotel)
+        public async Task<ActionResult<Hotel>> Add(Hotel hotel)
         {
             try
             {
