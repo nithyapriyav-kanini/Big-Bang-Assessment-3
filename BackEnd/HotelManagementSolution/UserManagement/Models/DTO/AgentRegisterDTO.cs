@@ -1,6 +1,7 @@
 ﻿namespace UserManagement.Models.DTO
 {
-    public class RegisterDTO
+    public class AgentRegisterDTO : Agent
     {
+        public string? Password { get; set; }
     }
 }

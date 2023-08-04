@@ -92,7 +92,7 @@ namespace HotelManagement.Controllers
             return BadRequest("Cannot fetch at this time");
         }
 
-        [HttpGet("GetHotel")]
+        [HttpPost("GetHotel")]
         [ProducesResponseType(typeof(Hotel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Hotel>> Get(IdDTO dto)
