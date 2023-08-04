@@ -1,3 +1,10 @@
+using HotelManagement.Interfaces;
+using HotelManagement.Models;
+using HotelManagement.Models.Context;
+using HotelManagement.Repositories;
+using HotelManagement.Services;
+using Microsoft.EntityFrameworkCore;
+
 namespace HotelManagement
 {
     public class Program
@@ -12,6 +19,21 @@ namespace HotelManagement
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddDbContext<HotelContext>(opts =>
+            {
+                opts.UseSqlServer(builder.Configuration.GetConnectionString("conn"));
+            });
+
+            builder.Services.AddScoped<IHotelRepo<int, Hotel>, HotelRepo>();
+            builder.Services.AddScoped<IRoomRepo<int, Room>, RoomRepo>();
+            builder.Services.AddScoped<IRoomRepo<int, Amenity>, AmenityRepo>();
+            builder.Services.AddScoped<IRoomRepo<int, Image>, ImageRepo>();
+
+            builder.Services.AddScoped<IHotelService, HotelService>();
+            builder.Services.AddScoped<IRoomService, RoomService>();
+            builder.Services.AddScoped<IAmenityService, AmenityService>();
+            builder.Services.AddScoped<IImageService, ImageService>();
 
             var app = builder.Build();
 
