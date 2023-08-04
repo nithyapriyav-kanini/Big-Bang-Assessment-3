@@ -20,12 +20,14 @@ namespace HotelManagement
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+
+            //User Defined Services
             builder.Services.AddDbContext<HotelContext>(opts =>
             {
                 opts.UseSqlServer(builder.Configuration.GetConnectionString("conn"));
             });
 
-            //User Defined Services
+            
             builder.Services.AddScoped<IHotelRepo<int, Hotel>, HotelRepo>();
             builder.Services.AddScoped<IRoomRepo<int, Room>, RoomRepo>();
             builder.Services.AddScoped<IRoomRepo<int, Amenity>, AmenityRepo>();
@@ -46,7 +48,6 @@ namespace HotelManagement
             }
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 
