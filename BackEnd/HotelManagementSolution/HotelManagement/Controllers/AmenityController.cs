@@ -28,7 +28,7 @@ namespace HotelManagement.Controllers
             {
                 var Result = await _service.Add(amenity);
                 if (Result != null)
-                    return Ok("Amenity Successfully Added!");
+                    return Ok(Result);
             }
             catch (Exception ex)
             {
@@ -46,7 +46,7 @@ namespace HotelManagement.Controllers
             {
                 var Result = await _service.Delete(amenity.Id);
                 if (Result != null)
-                    return Ok("Amenity Successfully Deleted!");
+                    return Ok(Result);
             }
             catch (Exception ex)
             {
