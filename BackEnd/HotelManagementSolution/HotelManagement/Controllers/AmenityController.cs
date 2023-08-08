@@ -1,6 +1,7 @@
 ﻿using HotelManagement.Interfaces;
 using HotelManagement.Models;
 using HotelManagement.Models.DTO;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,7 @@ namespace HotelManagement.Controllers
 {
     [Route("api/[controller]/action")]
     [ApiController]
+    [EnableCors("ReactCors")]
     public class AmenityController : ControllerBase
     {
         private readonly IAmenityService _service;

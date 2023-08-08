@@ -3,7 +3,10 @@ using HotelManagement.Models;
 using HotelManagement.Models.Context;
 using HotelManagement.Repositories;
 using HotelManagement.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace HotelManagement
 {
@@ -38,6 +41,25 @@ namespace HotelManagement
             builder.Services.AddScoped<IAmenityService, AmenityService>();
             builder.Services.AddScoped<IImageService, ImageService>();
 
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["TokenKey"])),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
+            builder.Services.AddCors(opts =>
+            {
+                opts.AddPolicy("ReactCors", options =>
+                {
+                    options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+                });
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -47,6 +69,9 @@ namespace HotelManagement
                 app.UseSwaggerUI();
             }
 
+
+            app.UseCors("ReactCors");
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();

@@ -1,6 +1,14 @@
-﻿namespace HotelFeedback.Models.Context
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace HotelFeedback.Models.Context
 {
-    public class FeedbackContext
+    public class FeedbackContext : DbContext
     {
+        public FeedbackContext(DbContextOptions options) : base(options)
+        {
+
+        }
+
+        public DbSet<Feedback>? Feedbacks { get; set; }
     }
 }

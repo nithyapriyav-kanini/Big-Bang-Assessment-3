@@ -3,11 +3,13 @@ using HotelManagement.Models.DTO;
 using HotelManagement.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Cors;
 
 namespace HotelManagement.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("ReactCors")]
     public class ImageController : ControllerBase
     {
         private readonly IImageService _service;

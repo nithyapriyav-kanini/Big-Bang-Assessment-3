@@ -11,12 +11,14 @@ namespace HotelManagement.Services
         private readonly IHotelRepo<int, Hotel> _hrepo;
         private readonly IRoomRepo<int, Image> _irepo;
         private readonly IRoomRepo<int, Amenity> _arepo;
+        private readonly IRoomRepo<int, Room> _irrepo;
 
-        public HotelService(IHotelRepo<int,Hotel> hrepo,IRoomRepo<int,Image> irepo,IRoomRepo<int,Amenity> arepo)
+        public HotelService(IHotelRepo<int,Hotel> hrepo,IRoomRepo<int,Image> irepo,IRoomRepo<int,Amenity> arepo,IRoomRepo<int,Room> irrepo)
         {
             _hrepo = hrepo;
             _irepo = irepo;
             _arepo = arepo;
+            _irrepo = irrepo;
         }
         public async Task<Hotel?> Add(Hotel item)
         {
@@ -37,27 +39,23 @@ namespace HotelManagement.Services
             return null;
         }
 
-        public async Task<Hotel?> Get(int Id)
+        public async Task<HotelDTO?> Get(int Id)
         {
             var result = await _hrepo.Get(Id);
             if(result != null)
-                return result;
+            {
+                var mapped = await Mapper(result);
+                return mapped;
+            }
             return null;
         }
 
-        public async Task<ICollection<HotelDTO>?> GetAll()
+        public async Task<ICollection<Hotel>?> GetAll()
         {
             var result = await _hrepo.GetAll();
-            List<HotelDTO> dto = new List<HotelDTO>();
             if (result != null)
             {
-                foreach (var item in result)
-                {
-                    var mapped = await Mapper(item);
-                    if (mapped != null)
-                        dto.Add(mapped);
-                }
-                return dto;
+                return result;
             }
             return null;
         }
@@ -80,9 +78,10 @@ namespace HotelManagement.Services
             hotel.ContactNumber = dto.ContactNumber;
             hotel.City = dto.City;
             hotel.Country = dto.Country;
-            hotel.NumberOfRooms = dto.NumberOfRooms;
+            hotel.State = dto.State;
             hotel.MaximumPrice = dto.MaximumPrice;
             hotel.MinimumPrice = dto.MinimumPrice;
+            hotel.AgentId = dto.AgentId;
             return hotel;
         }
         private async Task<HotelDTO?> Mapper(Hotel dto)
@@ -96,12 +95,32 @@ namespace HotelManagement.Services
             hotel.ContactNumber = dto.ContactNumber;
             hotel.City = dto.City;
             hotel.Country = dto.Country;
-            hotel.NumberOfRooms = dto.NumberOfRooms;
+            hotel.State = dto.State;
             hotel.MaximumPrice = dto.MaximumPrice;
             hotel.MinimumPrice = dto.MinimumPrice;
+            hotel.AgentId = dto.AgentId;
             hotel.Images =await  _irepo.GetAll(dto.Id);
             hotel.AmenityType = await _arepo.GetAll(dto.Id);
+            hotel.Rooms = await _irrepo.GetAll(dto.Id);
             return hotel;
+        }
+
+        public async Task<ICollection<Hotel>?> GetAll(int id)
+        {
+            var result = await _hrepo.GetAll();
+            List<Hotel> res = new List<Hotel>();
+            if (result != null)
+            {
+                foreach(var hotel in result)
+                {
+                    if (hotel.AgentId == id)
+                    {
+                        res.Add(hotel);
+                    }
+                }
+                return res;
+            }
+            return null;
         }
     }
 }

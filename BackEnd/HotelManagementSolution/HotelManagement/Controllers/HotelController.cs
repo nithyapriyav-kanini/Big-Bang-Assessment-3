@@ -2,6 +2,7 @@
 using HotelManagement.Models;
 using HotelManagement.Models.DTO;
 using HotelManagement.Services;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace HotelManagement.Controllers
 {
     [Route("api/[controller]/action")]
     [ApiController]
+    [EnableCors("ReactCors")]
     public class HotelController : ControllerBase
     {
         private readonly IHotelService _service;
@@ -29,7 +31,7 @@ namespace HotelManagement.Controllers
             {
                 var Result = await _service.Add(hotel);
                 if (Result != null)
-                    return Ok("Hotel Information Successfully Added!");
+                    return Ok(Result);
             }
             catch (Exception ex)
             {
@@ -75,9 +77,9 @@ namespace HotelManagement.Controllers
         }
 
         [HttpGet("GetAllHotels")]
-        [ProducesResponseType(typeof(ICollection<HotelDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ICollection<Hotel>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<ICollection<HotelDTO>>> GetAll()
+        public async Task<ActionResult<ICollection<Hotel>?>> GetAll()
         {
             try
             {
@@ -92,10 +94,28 @@ namespace HotelManagement.Controllers
             return BadRequest("Cannot fetch at this time");
         }
 
-        [HttpPost("GetHotel")]
-        [ProducesResponseType(typeof(Hotel), StatusCodes.Status200OK)]
+        [HttpPost("GetAllHotelsByAgent")]
+        [ProducesResponseType(typeof(ICollection<Hotel>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<Hotel>> Get(IdDTO dto)
+        public async Task<ActionResult<ICollection<Hotel>?>> GetAllByAgent(IdDTO dto)
+        {
+            try
+            {
+                var Result = await _service.GetAll(dto.Id);
+                if (Result != null)
+                    return Ok(Result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+            return BadRequest("Cannot fetch at this time");
+        }
+
+        [HttpPost("GetHotel")]
+        [ProducesResponseType(typeof(HotelDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<HotelDTO>> Get(IdDTO dto)
         {
             try
             {

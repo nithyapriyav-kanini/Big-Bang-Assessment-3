@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
@@ -12,6 +13,7 @@ namespace UserManagement.Controllers
 {
     [Route("api/[controller]/action")]
     [ApiController]
+    [EnableCors("ReactCors")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _service;

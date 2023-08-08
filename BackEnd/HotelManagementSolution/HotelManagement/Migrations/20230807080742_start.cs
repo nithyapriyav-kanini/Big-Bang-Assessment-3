@@ -4,7 +4,7 @@
 
 namespace HotelManagement.Migrations
 {
-    public partial class init : Migration
+    public partial class start : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -21,9 +21,10 @@ namespace HotelManagement.Migrations
                     ContactNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NumberOfRooms = table.Column<int>(type: "int", nullable: false),
+                    State = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MinimumPrice = table.Column<double>(type: "float", nullable: false),
-                    MaximumPrice = table.Column<double>(type: "float", nullable: false)
+                    MaximumPrice = table.Column<double>(type: "float", nullable: false),
+                    AgentId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

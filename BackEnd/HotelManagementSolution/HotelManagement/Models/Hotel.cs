@@ -33,13 +33,16 @@ namespace HotelManagement.Models
         public string? Country { get; set; }
 
         [Required]
-        public int? NumberOfRooms { get; set; }
+        public string? State { get; set; }
 
         [Required]
         public double? MinimumPrice { get; set; }
 
         [Required]
         public double? MaximumPrice { get; set; }
+
+        [Required]
+        public int? AgentId { get; set; }
 
     }
 }

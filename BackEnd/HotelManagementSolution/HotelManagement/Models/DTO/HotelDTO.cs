@@ -12,10 +12,12 @@ namespace HotelManagement.Models.DTO
         public string? ContactNumber { get; set; }
         public string? City { get; set; }
         public string? Country { get; set; }
-        public int? NumberOfRooms { get; set; }
+        public string? State { get; set; }
         public double? MinimumPrice { get; set; }
         public double? MaximumPrice { get; set; }
+        public int? AgentId { get; set; }
         public ICollection<Image>? Images { get; set; }
         public ICollection<Amenity>? AmenityType { get; set; }
+        public ICollection<Room>? Rooms { get; set; }
     }
 }

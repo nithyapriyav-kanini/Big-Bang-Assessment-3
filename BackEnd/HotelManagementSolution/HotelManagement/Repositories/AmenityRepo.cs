@@ -115,7 +115,7 @@ namespace HotelManagement.Repositories
 
         public async Task<Amenity?> Update(Amenity item)
         {
-            if (_context.Amenities != null)
+            if (_context.Rooms != null)
             {
                 try
                 {

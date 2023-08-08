@@ -1,0 +1,40 @@
+#agentTable{
+    position: relative;
+    margin-top: 100px;
+}
+
+.scrollto:hover{
+    background-color:rgb(212, 104, 104);
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+/* th, td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+} */   
+
+th {
+    background-color: #b43030;
+    color: #fff;
+}
+
+/* tr:nth-child(even) {
+    background-color: #ccc;
+} */
+body {
+    background-image: none;
+  }
+
+  /* .views{
+    background-color: #4353e8;
+    text-align: center;
+    position:relative;
+    left:38%; 
+    height: 50px;
+    width: 200px; 
+  } */
